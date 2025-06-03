@@ -41,6 +41,10 @@ jobs:
     needs: test
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     environment: pr-${{ github.event.number }}
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -72,6 +76,8 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          CLOUDFLARE_ENV: pr-${{ github.event.number }}
 
       - name: Deploy to PR Environment
         id: deploy
@@ -79,7 +85,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy --env pr-${{ github.event.number }}
+          command: deploy
 
       - name: Create deployment summary
         run: |
@@ -121,6 +127,10 @@ jobs:
     name: Cleanup PR Environment
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    permissions:
+      contents: read
+      issues: write
+      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -149,13 +159,18 @@ jobs:
           fs.writeFileSync('wrangler.jsonc', JSON.stringify(config, null, '\t'));
           "
 
+      - name: Build application
+        run: npm run build
+        env:
+          CLOUDFLARE_ENV: pr-${{ github.event.number }}
+
       - name: Delete PR Environment
         id: cleanup
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: delete --env pr-${{ github.event.number }} --force
+          command: delete --force
         continue-on-error: true
 
       - name: Create cleanup summary
