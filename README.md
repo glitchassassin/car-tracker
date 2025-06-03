@@ -50,23 +50,70 @@ npm run build
 
 ## Deployment
 
-Deployment is done using the Wrangler CLI.
+This project supports automatic deployment with environment-specific builds using the [Cloudflare wrangler-action](https://github.com/cloudflare/wrangler-action):
 
-To build and deploy directly to production:
+### Setup Requirements
+
+To enable automatic deployments, add these secrets to your GitHub repository:
+- `CLOUDFLARE_API_TOKEN` - Your Cloudflare API token
+- `CLOUDFLARE_ACCOUNT_ID` - Your Cloudflare account ID
+
+### Production Deployment
+
+Production deployment happens automatically when changes are pushed to the `main` branch. The app is deployed to the production environment.
+
+To deploy manually to production:
 
 ```sh
-npm run deploy
+npm run deploy -- --env production
 ```
 
-To deploy a preview URL:
+### PR Preview Environments
+
+When you create a pull request, the CI/CD pipeline automatically:
+
+1. **Deploys a preview environment** - Each PR gets its own isolated environment at `https://car-tracker-pr-{number}.{subdomain}.workers.dev`
+2. **Comments on the PR** with the preview URL and deployment details
+3. **Automatically cleans up** the environment when the PR is closed or merged
+
+#### Environment Features:
+- **Isolated environments**: Each PR has its own Worker deployment
+- **Automatic cleanup**: Environments are deleted when PRs are closed
+- **Real-time updates**: Environments are updated on every push to the PR
+- **Environment variables**: PR environments include `PR_NUMBER` and `ENVIRONMENT` variables
+
+#### Manual PR Deployment
+
+To deploy a specific environment manually using the wrangler-action approach:
 
 ```sh
+# Create a temporary wrangler config for your PR
+cat > wrangler.pr.jsonc << EOF
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "car-tracker-pr-123",
+  "compatibility_date": "2025-04-04",
+  "main": "./workers/app.ts",
+  "workers_dev": true,
+  "vars": {
+    "ENVIRONMENT": "pr-123",
+    "PR_NUMBER": "123"
+  }
+}
+EOF
+
+npx wrangler deploy --config wrangler.pr.jsonc
+```
+
+### Legacy Deployment Commands
+
+For advanced deployment scenarios:
+
+```sh
+# Deploy a preview URL
 npx wrangler versions upload
-```
 
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
+# Promote a version to production
 npx wrangler versions deploy
 ```
 
