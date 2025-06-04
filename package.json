@@ -10,7 +10,12 @@
 		"dev": "react-router dev",
 		"postinstall": "npm run cf-typegen",
 		"preview": "npm run build && vite preview",
-		"typecheck": "npm run cf-typegen && react-router typegen && tsc -b"
+		"typecheck": "npm run cf-typegen && react-router typegen && tsc -b",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"test:e2e:debug": "playwright test --debug",
+		"test:e2e:report": "playwright show-report",
+		"test:e2e:install": "playwright install"
 	},
 	"dependencies": {
 		"isbot": "^5.1.27",
@@ -21,6 +26,7 @@
 	"devDependencies": {
 		"@cloudflare/vite-plugin": "^1.0.12",
 		"@epic-web/config": "^1.21.0",
+		"@playwright/test": "^1.49.1",
 		"@react-router/dev": "^7.5.3",
 		"@tailwindcss/vite": "^4.1.4",
 		"@types/node": "^20",
