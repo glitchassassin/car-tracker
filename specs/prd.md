@@ -261,46 +261,46 @@ Our church is hosting a free single moms oil change outreach event (SMOC) where 
 
 ### Phase 1: Foundation & Deployment
 
-- Initialize React Router 7 project with default content
-- Set up Tailwind v4
-- Set up eslint/prettier rules with @epicweb-dev/config
-- Set up Wrangler config to deploy to Cloudflare
-- Set up Playwright e2e tests
-- Configure GitHub Action for build, test, and deployment
-- Configure deployment to PR environments for review
+- [x] Initialize React Router 7 project with default content
+- [x] Set up Tailwind v4
+- [x] Set up eslint/prettier rules with @epicweb-dev/config
+- [x] Set up Wrangler config to deploy to Cloudflare
+- [x] Set up Playwright e2e tests
+- [x] Configure GitHub Action for build, test, and deployment
+- [x] Configure deployment to PR environments for review
 
 ### Phase 2: Core Data & Basic UI
 
-- Set up Prisma and define SQLite schema
-- Mock data in CSV
-- Data import script to load from CSV
+- [ ] Set up Prisma and define SQLite schema
+- [ ] Mock data in CSV
+- [ ] Data import script to load from CSV
 
 ### Phase 3: Volunteer Workflows
 
-- Create an index route to select one of the volunteer interfaces
-- Build all three volunteer interfaces, with loaders and actions to read and write from db
-- Implement car search and verification flows
-- Add status transition buttons to trigger the action
-- Create car detail verification screens
-- Add basic error handling and validation
-- E2E tests for each workflow
+- [ ] Create an index route to select one of the volunteer interfaces
+- [ ] Build all three volunteer interfaces, with loaders and actions to read and write from db
+- [ ] Implement car search and verification flows
+- [ ] Add status transition buttons to trigger the action
+- [ ] Create car detail verification screens
+- [ ] Add basic error handling and validation
+- [ ] E2E tests for each workflow
 
 ### Phase 4: Public Display Interface
 
-- Create projector-optimized display layout
-- Implement car status listing with color coding
+- [ ] Create projector-optimized display layout
+- [ ] Implement car status listing with color coding
 
 ### Phase 5: Real-time Updates
 
-- Implement Server-Sent Events endpoint, triggered by actions
-- Add loader revalidation on SSE events
-- Connection status indicators
-- Disconnect recovery (refreshing page when Internet connection is reestablished)
-- e2e tests for real-time functionality
+- [ ] Implement Server-Sent Events endpoint, triggered by actions
+- [ ] Add loader revalidation on SSE events
+- [ ] Connection status indicators
+- [ ] Disconnect recovery (refreshing page when Internet connection is reestablished)
+- [ ] e2e tests for real-time functionality
 
 ### Phase 6: Reporting
 
-- Build reporting interface
-- Add data export capabilities
+- [ ] Build reporting interface
+- [ ] Add data export capabilities
 
 
