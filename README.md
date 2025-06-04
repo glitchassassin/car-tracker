@@ -10,6 +10,7 @@ A modern, production-ready template for building full-stack React applications u
 - 🔄 Data loading and mutations
 - 🔒 TypeScript by default
 - 🎉 TailwindCSS for styling
+- 🧪 End-to-end testing with Playwright
 - 📖 [React Router docs](https://reactrouter.com/)
 
 ## Getting Started
@@ -47,6 +48,67 @@ Create a production build:
 ```bash
 npm run build
 ```
+
+## Testing
+
+This project includes end-to-end testing with [Playwright](https://playwright.dev/).
+
+### Running Tests
+
+Run all e2e tests:
+
+```bash
+npm run test:e2e
+```
+
+Run tests in UI mode (interactive):
+
+```bash
+npm run test:e2e:ui
+```
+
+Run tests in debug mode:
+
+```bash
+npm run test:e2e:debug
+```
+
+View test report:
+
+```bash
+npm run test:e2e:report
+```
+
+### Test Configuration
+
+Tests are configured in `playwright.config.ts` and located in the `tests/e2e/` directory. The configuration includes:
+
+- **Multi-browser testing**: Chromium, Firefox, and WebKit
+- **Mobile testing**: Tests run on mobile viewports (Pixel 5, iPhone 12)
+- **Automatic dev server**: Starts the development server before running tests
+- **Screenshots and videos**: Captured on test failures
+- **Trace collection**: Available for debugging failed tests
+
+### Writing Tests
+
+Tests are written using Playwright's test framework. Example:
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('should load the homepage', async ({ page }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle('Car Tracker');
+  await expect(page.getByText("What's next?")).toBeVisible();
+});
+```
+
+### CI/CD Integration
+
+E2E tests run automatically in the CI/CD pipeline:
+- Tests run in parallel with the build job
+- Both test and e2e-tests jobs must pass before deployment
+- Test artifacts (reports, screenshots, videos) are uploaded for debugging
 
 ## Deployment
 
