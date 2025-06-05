@@ -130,54 +130,46 @@ To deploy manually to production:
 npm run deploy -- --env production
 ```
 
-### PR Preview Environments
+### Preview Deployments
 
 When you create a pull request, the CI/CD pipeline automatically:
 
-1. **Deploys a preview environment** - Each PR gets its own isolated environment at `https://car-tracker-pr-{number}.{subdomain}.workers.dev`
-2. **Comments on the PR** with the preview URL and deployment details
-3. **Automatically cleans up** the environment when the PR is closed or merged
+1. **Uploads a preview version** - Each PR gets uploaded as a tagged version (`pr-{number}`) to Cloudflare
+2. **Comments on the PR** with instructions to deploy the preview version for testing
+3. **No cleanup required** - Preview versions are managed through Cloudflare's versioning system
 
-#### Environment Features:
-- **Isolated environments**: Each PR has its own Worker deployment
-- **Automatic cleanup**: Environments are deleted when PRs are closed
-- **Real-time updates**: Environments are updated on every push to the PR
-- **Environment variables**: PR environments include `PR_NUMBER` and `ENVIRONMENT` variables
+#### Preview Features:
+- **Tagged versions**: Each PR creates a version tagged with `pr-{number}`
+- **On-demand deployment**: Deploy preview versions when needed for testing
+- **Version management**: All preview versions are managed through Cloudflare's dashboard
+- **Simple workflow**: No complex environment configuration or cleanup
 
-#### Manual PR Deployment
+#### Manual Preview Deployment
 
-To deploy a specific environment manually using the wrangler-action approach:
-
-```sh
-# Create a temporary wrangler config for your PR
-cat > wrangler.pr.jsonc << EOF
-{
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "car-tracker-pr-123",
-  "compatibility_date": "2025-04-04",
-  "main": "./workers/app.ts",
-  "workers_dev": true,
-  "vars": {
-    "ENVIRONMENT": "pr-123",
-    "PR_NUMBER": "123"
-  }
-}
-EOF
-
-npx wrangler deploy --config wrangler.pr.jsonc
-```
-
-### Legacy Deployment Commands
-
-For advanced deployment scenarios:
+To deploy a preview version for testing:
 
 ```sh
-# Deploy a preview URL
-npx wrangler versions upload
+# Upload a preview version (done automatically by CI/CD)
+npm run deploy:preview
+# or with a custom tag:
+npx wrangler versions upload --tag my-feature
+
+# Upload and immediately deploy a preview version
+npm run deploy:preview-now
+
+# Deploy a specific version
+npx wrangler versions deploy --x-versions
 
 # Promote a version to production
-npx wrangler versions deploy
+npx wrangler versions deploy [version-id]
 ```
+
+#### Using Preview URLs
+
+Preview URLs are managed through:
+- **Cloudflare Dashboard**: Access version management and preview URLs
+- **Wrangler CLI**: Deploy and manage versions locally
+- **GitHub Actions**: Automatic version uploads on PR creation
 
 ## Styling
 
