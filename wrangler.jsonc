@@ -6,6 +6,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "car-tracker",
 	"compatibility_date": "2025-04-04",
+	"compatibility_flags": ["nodejs_compat"],
 	"main": "./workers/app.ts",
 	"vars": {
 		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare",
@@ -20,7 +21,20 @@
 				"ENVIRONMENT": "production"
 			}
 		}
-	}
+	},
+	
+	/**
+	 * D1 Database Configuration
+	 * Docs: https://developers.cloudflare.com/d1/get-started/
+	 */
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "car-tracker-db",
+			"database_id": "bc178937-2965-4a5a-ad14-e8502a93d947"
+		}
+	],
+	
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

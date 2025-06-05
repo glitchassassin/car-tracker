@@ -269,11 +269,11 @@ Our church is hosting a free single moms oil change outreach event (SMOC) where 
 - [x] Configure GitHub Action for build, test, and deployment
 - [x] Configure deployment to PR environments for review
 
-### Phase 2: Core Data & Basic UI
+### Phase 2: Core Data
 
-- [ ] Set up Prisma and define SQLite schema
-- [ ] Mock data in CSV
-- [ ] Data import script to load from CSV
+- [x] Set up D1 and define SQLite schema
+- [x] Mock data in CSV
+- [x] Data import script to load from CSV
 
 ### Phase 3: Volunteer Workflows
 

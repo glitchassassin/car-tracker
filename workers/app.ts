@@ -6,6 +6,7 @@ declare module "react-router" {
       env: Env;
       ctx: ExecutionContext;
     };
+    db: D1Database;
   }
 }
 
@@ -16,8 +17,9 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    return requestHandler(request, {
+    return await requestHandler(request, {
       cloudflare: { env, ctx },
+      db: env.DB,
     });
   },
 } satisfies ExportedHandler<Env>;
