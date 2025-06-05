@@ -270,6 +270,13 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Apply database migrations
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply car-tracker-db --remote
+
       - name: Deploy to Production
         id: production-deploy
         uses: cloudflare/wrangler-action@v3
